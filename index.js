@@ -1,7 +1,14 @@
-const http = require('http')
+const express = require('express')
+const port = 80
 
-const server = http.createServer(function(req, res) {
-    console.log('Ktoś wszedł na serwer...')
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Hello Express!')
 })
 
-server.listen(3000)
+app.get('/firmy/tworcastron', (req, res) => {
+    res.send('Hello kontakt')
+})
+
+app.listen(port)
