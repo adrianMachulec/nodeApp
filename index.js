@@ -11,9 +11,13 @@ app.use(ejsLayouts)
 app.set('layout', './layouts/main')
 app.set("views", path.join(__dirname + "/views"));
 
+//public folder
+app.use(express.static('public'))
+
 app.get("/", (req, res) => {
   res.render("pages/home", {
-    title: 'Strona główna'
+    title: 'Strona główna',
+    url: req.url
   });
 });
 
@@ -29,14 +33,16 @@ app.get("/firmy/:name", (req, res) => {
   res.render("pages/company", {
     name: company?.name,
     companies,
-    title: company?.name ?? 'Brak wyników'
+    title: company?.name ?? 'Brak wyników',
+    url: req.url
   });
 });
 
 app.get("*", (req, res) => {
   res.render("errors/404", {
     title: 'Nie znaleziono',
-    layout: './layouts/minimalistic'
+    layout: './layouts/minimalistic',
+    url: req.url
   });
 });
 
