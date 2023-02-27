@@ -1,0 +1,9 @@
+<%- include('partials/header') -%>
+    
+    <% if(name){ %>
+        <h1>Firma: <%= name %></h1>
+    <% } else { %>
+        <h1>Nie ma takiej firmy</h1>
+    <% } %>
+
+<%- include('partials/footer') -%>

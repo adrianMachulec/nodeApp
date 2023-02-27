@@ -1,10 +1,14 @@
 const express = require('express')
+const path = require('path')
 const port = 80
-
 const app = express()
 
+// view engine
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname + '/views'))
+
 app.get('/', (req, res) => {
-    res.send('Hello Express!')
+    res.render('home')
 })
 
 app.get('/firmy/:name', (req, res) => {
@@ -16,11 +20,11 @@ app.get('/firmy/:name', (req, res) => {
 
     const company = comapnies.find(x => x.slug === name)
     
-    if(company){
-        res.send(`Nazwa firmy: ${company.name}`)
-    } else {
-        res.send(`Nie znaleziono firmy`)
-    }
+    res.render('company', { name: company?.name})
+})
+
+app.get('*', (req, res) => {
+    res.render('errors/404')
 })
 
 app.listen(port)
