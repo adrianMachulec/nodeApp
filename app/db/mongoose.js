@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const url = 'mongodb://127.0.0.1:27017/katalog-firm'
+const mongoose = require("mongoose");
+const { database } = require("../config");
 
-mongoose.set('strictQuery', true)
-mongoose.connect(url)
+mongoose.set("strictQuery", true);
+mongoose.connect(database);
