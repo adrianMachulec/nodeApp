@@ -1,16 +1,14 @@
 class PageController {
   showHome(req, res) {
     res.render("pages/home", {
-      title: "Strona główna",
-      url: req.url,
+      title: "Strona główna"
     });
   }
 
   showNotFound(req, res) {
     res.render("errors/404", {
       title: "Nie znaleziono",
-      layout: "./layouts/minimalistic",
-      url: req.url,
+      layout: "./layouts/minimalistic"
     });
   }
 }

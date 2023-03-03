@@ -15,6 +15,9 @@ app.set("views", path.join(__dirname + "/../views"));
 //public folder
 app.use(express.static('public'))
 
+// middlewares
+app.use('/', require('./middleware/view-variables'))
+
 // mount routers
 
 app.use(require('./routes/web'))

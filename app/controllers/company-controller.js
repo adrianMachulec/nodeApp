@@ -7,8 +7,7 @@ class CompanyController {
     const companies = await Company.find({})
 
     res.render("pages/companies", {
-      companies,
-      url: req.url
+      companies
     });
   }
 
@@ -19,8 +18,7 @@ class CompanyController {
 
     res.render("pages/company", {
       name: company?.name,
-      title: company?.name ?? "Brak wyników",
-      url: req.url,
+      title: company?.name ?? "Brak wyników"
     });
   }
 }
