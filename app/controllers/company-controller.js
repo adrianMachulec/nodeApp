@@ -43,6 +43,34 @@ class CompanyController {
       })
     }
   }
+
+  async showEditCompanyForm(req, res) {
+    const { name } = req.params;
+    const company = await Company.findOne({ slug: name})
+
+    res.render('pages/companies/edit', {
+      form: company
+    })
+  }
+
+  async editCompany(req, res) {
+    const { name } = req.params;
+    const company = await Company.findOne({ slug: name})
+
+    company.name = req.body.name,
+    company.slug = req.body.slug,
+    company.employeesCount = req.body.employeesCount || undefined
+
+    try{
+      await company.save()
+      res.redirect('/firmy')
+    } catch(e){
+      res.render('pages/companies/edit' ,{
+        errors: e.errors,
+        form: req.body
+      })
+    }
+  }
 }
 
 module.exports = new CompanyController()
