@@ -15,6 +15,9 @@ app.set("views", path.join(__dirname + "/../views"));
 //public folder
 app.use(express.static('public'))
 
+//body parser
+app.use(express.urlencoded({extended:true}))
+
 // middlewares
 app.use('/', require('./middleware/view-variables'))
 
