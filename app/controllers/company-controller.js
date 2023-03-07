@@ -3,8 +3,8 @@ const Company = require('../db/models/Company')
 class CompanyController {
   
   async showCompanies(req, res) {
-
-    const companies = await Company.find({})
+    const { q } = req.query
+    let companies = await Company.find({ name: { $regex: q, $options: 'i'} })
 
     res.render("pages/companies/companies", {
       companies
