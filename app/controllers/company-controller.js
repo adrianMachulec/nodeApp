@@ -6,8 +6,13 @@ class CompanyController {
     const { q, sort, countmin, countmax } = req.query
     const where = {}
 
-    
+    const page = req.query.page || 1
+    const perPage = 2
+
+    // search
     if( q ) where.name = { $regex: q, $options: 'i'}
+
+    // filters
     if(countmin || countmax) {
       where.employeesCount = {}
       if(countmin) where.employeesCount.$gte = countmin
@@ -15,16 +20,28 @@ class CompanyController {
     }
     
     let query = Company.find(where)
+    
 
+    //pagination
+    query = query.skip((page-1)*perPage)
+    query = query.limit(perPage)
+
+    //sorting 
     if( sort ){
       const s = sort.split('|')
       query = query.sort( { [s[0]]: s[1]})
     }
 
+    // exec
     const companies = await query.exec()
+    const resultsCount = await Company.find(where).count()
+    const pagesCount = Math.ceil(resultsCount / perPage)
 
     res.render("pages/companies/companies", {
-      companies
+      companies,
+      page,
+      pagesCount,
+      resultsCount
     });
   }
 
