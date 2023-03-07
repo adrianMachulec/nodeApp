@@ -3,10 +3,18 @@ const Company = require('../db/models/Company')
 class CompanyController {
   
   async showCompanies(req, res) {
-    const { q, sort } = req.query
+    const { q, sort, countmin, countmax } = req.query
+    const where = {}
 
-    let query = Company.find({ name: { $regex: q || '', $options: 'i'} })
-
+    
+    if( q ) where.name = { $regex: q, $options: 'i'}
+    if(countmin || countmax) {
+      where.employeesCount = {}
+      if(countmin) where.employeesCount.$gte = countmin
+      if(countmax) where.employeesCount.$lte = countmax
+    }
+    
+    let query = Company.find(where)
 
     if( sort ){
       const s = sort.split('|')
