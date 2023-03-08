@@ -16,6 +16,9 @@ router.post("/zaloguj", UserController.login);
 
 router.get("/wyloguj", UserController.logout);
 
+router.get("/admin/profil", UserController.showProfile);
+router.post("/admin/profil", UserController.update);
+
 router.get("/admin/firmy/dodaj", CompanyController.showCreateCompanyForm);
 router.post("/admin/firmy/dodaj", CompanyController.createCompany);
 router.get("/admin/firmy/:name/edytuj", CompanyController.showEditCompanyForm);
