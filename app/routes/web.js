@@ -11,6 +11,9 @@ router.get("/firmy/:name", CompanyController.showCompany);
 router.get("/zarejestruj", UserController.showRegister);
 router.post("/zarejestruj", UserController.register);
 
+router.get("/zaloguj", UserController.showLogin);
+router.post("/zaloguj", UserController.login);
+
 router.get("/admin/firmy/dodaj", CompanyController.showCreateCompanyForm);
 router.post("/admin/firmy/dodaj", CompanyController.createCompany);
 router.get("/admin/firmy/:name/edytuj", CompanyController.showEditCompanyForm);
