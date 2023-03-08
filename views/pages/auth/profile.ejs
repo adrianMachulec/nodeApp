@@ -27,6 +27,32 @@
             <div class="invalid-feedback"><%= errors.password.message %></div>
         <% } %>
     </div>
+
+    <div class="mb-3">
+        <label for="firstName" class="form-label">Imię</label>
+        <input
+            type="text"
+            name="firstName"
+            value="<%= form.firstName %>"
+            class="form-control <%- errors?.firstName ? 'is-invalid' : '' %>"
+        >
+        <% if(errors?.firstName) { %>
+            <div class="invalid-feedback"><%= errors.firstName.message %></div>
+        <% } %>
+    </div>
+
+    <div class="mb-3">
+        <label for="lastName" class="form-label">Naziwsko</label>
+        <input
+            type="text"
+            name="lastName"
+            value="<%= form.lastName %>"
+            class="form-control <%- errors?.lastName ? 'is-invalid' : '' %>"
+        >
+        <% if(errors?.lastName) { %>
+            <div class="invalid-feedback"><%= errors.lastName.message %></div>
+        <% } %>
+    </div>
     
     <button class="btn btn-primary">Zapisz</button>
 </form>

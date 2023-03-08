@@ -17,6 +17,8 @@ const userSchema = new Schema({
     required: true,
     minLength: [4, "Hasło powinno posiadać min 4 znaki"],
   },
+  firstName: String,
+  lastName: String
 });
 
 userSchema.pre("save", function (next) {
@@ -44,6 +46,10 @@ userSchema.methods = {
     return bcrypt.compareSync(password, user.password);
   },
 };
+
+userSchema.virtual('fullName').get(function() {
+  if(this.firstName) return `${this.firstName} ${this.lastName}.`
+})
 
 const User = mongoose.model("User", userSchema);
 

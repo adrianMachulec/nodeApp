@@ -33,7 +33,7 @@ class CompanyController {
     }
 
     // exec
-    const companies = await query.exec()
+    const companies = await query.populate('user').exec()
     const resultsCount = await Company.find(where).count()
     const pagesCount = Math.ceil(resultsCount / perPage)
 
@@ -64,7 +64,8 @@ class CompanyController {
     const company = new Company({
       name: req.body.name,
       slug: req.body.slug,
-      employeesCount: req.body.employeesCount || undefined
+      employeesCount: req.body.employeesCount || undefined,
+      user: req.session.user._id
     });
 
     try{
