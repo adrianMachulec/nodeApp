@@ -1,7 +1,11 @@
 <h1>Lista firm:</h1>
 
+<% if(user) {%>
+    <a href="/admin/firmy/dodaj" class="btn btn-success">Dodaj nową firmę</a>
+<% } %>
 <form>
     <%- include('partials/search') %>
+
 
     <div class="row">
         <div class="col-3">
@@ -14,8 +18,10 @@
                     <p class="h3 mb-4"><%= company.name %>
                     <p>Pracowników: <%= company.employeesCount %></p>
                     <a href="/firmy/<%= company.slug %>" class="btn btn-primary">Zobacz</a>
+                    <% if(user) {%>
                     <a href="admin/firmy/<%= company.slug %>/edytuj" class="btn btn-warning">Edytuj</a>
                     <a href="admin/firmy/<%= company.slug %>/usun" onclick="return confirm('Czy jesteś pewny?')"    class="btn btn-danger">Usuń</a>
+                    <% } %>
                 </div>
             </div>
             <% }) %>

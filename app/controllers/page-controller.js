@@ -1,8 +1,7 @@
 class PageController {
   showHome(req, res) {
     res.render("pages/home", {
-      title: "Strona główna",
-      user: req.session.user
+      title: "Strona główna"
     });
   }
 

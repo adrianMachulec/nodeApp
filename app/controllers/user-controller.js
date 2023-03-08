@@ -17,6 +17,7 @@ class UserController {
       await user.save();
       res.redirect("/zaloguj");
     } catch (e) {
+      console.log(e)
       res.render("pages/auth/register", {
         errors: e.errors,
         form: req.body,
@@ -57,6 +58,11 @@ class UserController {
         errors: true,
       });
     }
+  }
+
+  logout(req, res){
+    req.session.destroy()
+    res.redirect('/')
   }
 }
 
