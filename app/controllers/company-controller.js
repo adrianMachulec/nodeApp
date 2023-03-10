@@ -1,4 +1,5 @@
 const Company = require('../db/models/Company')
+const fs = require('fs')
 
 class CompanyController {
   
@@ -95,6 +96,11 @@ class CompanyController {
     company.name = req.body.name,
     company.slug = req.body.slug,
     company.employeesCount = req.body.employeesCount || undefined
+    
+    if(req.file.filename && company.image){
+      fs.unlinkSync('public/uploads/' + company.image)
+    }
+    if(req.file.filename) company.image = req.file.filename
 
     try{
       await company.save()
@@ -109,9 +115,26 @@ class CompanyController {
 
   async deleteCompany(req, res) {
     const { name } = req.params;
+    const company = await Company.findOne({ slug: name });
+    try{
+      if(company.image){
+        fs.unlinkSync('public/uploads/' + company.image)
+      }
+      await Company.deleteOne({slug: name})
+      res.redirect('/firmy')
+    } catch(e){
+      console.log(e)
+    }
+  }
+
+  async deleteImage(req, res) {
+    const { name } = req.params;
+    const company = await Company.findOne({slug: name})
 
     try{
-      await Company.deleteOne({slug: name})
+      fs.unlinkSync('public/uploads/' + company.image)
+      company.image = ''
+      await company.save()
       res.redirect('/firmy')
     } catch(e){
       res.render('pages/companies/usun' ,{
