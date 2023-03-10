@@ -28,6 +28,7 @@ router.post("/admin/firmy/:name/edytuj",uploader.single('image'), CompanyControl
 router.get("/admin/firmy/:name/usun", CompanyController.deleteCompany);
 router.get("/admin/firmy/:name/usun-zdjecie", CompanyController.deleteImage);
 
+router.get("/csv", CompanyController.getCSV);
 
 router.get("*", PageController.showNotFound);
 

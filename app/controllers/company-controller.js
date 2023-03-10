@@ -1,5 +1,6 @@
 const Company = require('../db/models/Company')
 const fs = require('fs')
+const { Parser } = require('json2csv')
 
 class CompanyController {
   
@@ -142,6 +143,34 @@ class CompanyController {
         form: req.body
       })
     }
+  }
+
+  async getCSV(req, res) {
+    const fields = [
+      {
+        label: 'Nazwa',
+        value: 'name'
+      },
+      {
+        label: 'URL',
+        value: 'slug'
+      },
+      {
+        label: 'Liczba pracowników',
+        value: 'employeesCount'
+      }
+    ]
+
+    const data = await Company.find({})
+
+    const fileName = 'companies.csv'
+
+    const json2csv = new Parser({fields})
+    const csv = json2csv.parse(data)
+
+    res.header('Content-Type', 'text/csv')
+    res.attachment(fileName)
+    res.send(csv)
   }
 }
 
