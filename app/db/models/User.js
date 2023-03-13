@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const { validateEmail } = require("../validators");
+const randomstring = require('randomstring')
 
 const userSchema = new Schema({
   email: {
@@ -18,7 +19,8 @@ const userSchema = new Schema({
     minLength: [4, "Hasło powinno posiadać min 4 znaki"],
   },
   firstName: String,
-  lastName: String
+  lastName: String,
+  apiToken: String,
 });
 
 userSchema.pre("save", function (next) {
@@ -40,6 +42,12 @@ userSchema.post("save", function (error, doc, next) {
   next(error);
 });
 
+userSchema.pre("save", function (next) {
+  const user = this;
+  if(user.isNew) user.apiToken = randomstring.generate(30);
+  next();
+});
+
 userSchema.methods = {
   comparePassword(password) {
     const user = this;
@@ -47,9 +55,9 @@ userSchema.methods = {
   },
 };
 
-userSchema.virtual('fullName').get(function() {
-  if(this.firstName) return `${this.firstName} ${this.lastName}.`
-})
+userSchema.virtual("fullName").get(function () {
+  if (this.firstName) return `${this.firstName} ${this.lastName}.`;
+});
 
 const User = mongoose.model("User", userSchema);
 
