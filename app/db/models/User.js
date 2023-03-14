@@ -56,7 +56,7 @@ userSchema.methods = {
 };
 
 userSchema.virtual("fullName").get(function () {
-  if (this.firstName) return `${this.firstName} ${this.lastName}.`;
+  if (this.firstName) return `${this.firstName || ''} ${this.lastName && this.lastName[0] || ''}.`;
 });
 
 const User = mongoose.model("User", userSchema);

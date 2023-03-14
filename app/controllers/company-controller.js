@@ -36,7 +36,7 @@ class CompanyController {
 
     // exec
     const companies = await query.populate('user').exec()
-    const resultsCount = await Company.find(where).count()
+    const resultsCount = await Company.find(where).countDocuments()
     const pagesCount = Math.ceil(resultsCount / perPage)
 
     res.render("pages/companies/companies", {
